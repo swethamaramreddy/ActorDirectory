@@ -33,14 +33,12 @@ public class ActorDirectoryController {
      @GetMapping("/findById")
     public String findById(@RequestParam("actorId") Integer actorId) throws Exception
     {
-
         if (actorDirectoryService.findById(actorId).isPresent())
         {
             ObjectMapper mapper=new ObjectMapper();
             Actor actor=actorDirectoryService.findById(actorId).get();
             return mapper.writeValueAsString(actor); //using ObjectMapper class converting List into Json string object
         }
-
         return "Actor not exists in ActorDirectory";
     }
 
@@ -60,6 +58,7 @@ public class ActorDirectoryController {
             return "Actor not exists in ActorDirectory";
         }
     }
+
     /*
     This end points is use to add the new actor into ActorDirectory
      */

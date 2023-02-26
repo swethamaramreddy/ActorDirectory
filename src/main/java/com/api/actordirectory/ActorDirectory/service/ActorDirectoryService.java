@@ -1,12 +1,7 @@
 package com.api.actordirectory.ActorDirectory.service;
-
-
 import com.api.actordirectory.ActorDirectory.DAO.CsvActorDao;
 import com.api.actordirectory.ActorDirectory.model.Actor;
-
-
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -34,7 +29,4 @@ public class ActorDirectoryService
     {
         return csvActorDao.updateActor(actor);
     }
-
-
-
 }

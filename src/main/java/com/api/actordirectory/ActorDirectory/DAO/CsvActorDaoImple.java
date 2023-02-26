@@ -24,23 +24,21 @@ public class CsvActorDaoImple implements CsvActorDao{
          {
              e.toString();
          }
-         System.out.println("file name is "+file);
          return file;
 
      }
 
-    /*this method gets the all actor details from the directory file and it is reusing in the below methods as per the requirement .
+    /*
+    this method gets the all actor details from the directory file
+    and it is reusing in the below methods as per the requirement .
     */
     @Override
     public List<Actor> findAll() throws  Exception{
-        System.out.println("fine name is "+FILENAME);
+
         List<Actor> actors = new ArrayList<Actor>();
-
-       DateTimeFormatter fmt= DateTimeFormatter.ofPattern("d MMMM yyyy");
-
         try (BufferedReader reader=new BufferedReader(new FileReader(getFile()))) {
 
-            String line =null; // skip header
+            String line =null;
             while ((line = reader.readLine()) != null) {
                 String[] fields = line.split(",");
                 System.out.println("fields[0] "+fields[0]+" fields [1] "+fields[1] + "  fields[2] "+fields[2]);
@@ -52,7 +50,6 @@ public class CsvActorDaoImple implements CsvActorDao{
 
             }
         }
-
         return actors;
 
     }
@@ -63,17 +60,16 @@ public class CsvActorDaoImple implements CsvActorDao{
     public Optional<Actor>  findById(Integer actorId) throws  Exception{
         return this.findAll().stream().filter(actor->actor.getActorId().equals(actorId)).findFirst();
     }
-    /*this method gets the all actor details using findAll() method and then filter the data by given name
+    /*This method gets the all actor details using findAll() method and then filter the data by given name
              in the filter condition ,1st converting name to lower case to ignore the case sensitive then checking the given name is present in list or not .
               */
     @Override
     public List<Actor> findByName(String name) throws Exception{
-
-
         return this.findAll().stream().filter(actor->actor.getName().toLowerCase().contains(name.toLowerCase())).collect(Collectors.toList());
     }
-    /*this method save the given actor details into ActorDirectory file
-                 */
+    /*
+    This method save the given actor details into ActorDirectory file
+    */
     @Override
     public String saveActor(Actor actor) throws Exception {
         FileWriter writer = new FileWriter(this.getFile(), true);
@@ -85,7 +81,8 @@ public class CsvActorDaoImple implements CsvActorDao{
     }
 
 
-    /*this method update the given actor details into ActorDirectory file
+    /*
+    This method update the given actor details into ActorDirectory file
     If the given Id not present in directory then it returns the "Actor not Exists in Directory" message.
      */
     @Override
@@ -101,15 +98,14 @@ public class CsvActorDaoImple implements CsvActorDao{
         } else {
             return "Actor not found in the directory";
         }
-
-
     }
-    /*this method writes the data into directory file .This is method called from updateActor() method to add the updated data into directory.
+
+    /*
+    This method writes the data into directory file .This is method called from updateActor() method to
+    add the updated data into directory.
      */
     private  void writeActorsToFile(List<Actor> actors) throws IOException {
         FileWriter writer = new FileWriter(this.getFile());
-
-
         for (Actor actor : actors) {
             writer.write(actor.toString());
             writer.write("\n");
@@ -117,7 +113,7 @@ public class CsvActorDaoImple implements CsvActorDao{
         writer.close();
     }
 
-    /*this method returns the Actor Id for new actors .
+    /*This method returns the Actor Id for new actors .
      */
     private int getNextId() throws Exception {
         List<Actor> actors = findAll();

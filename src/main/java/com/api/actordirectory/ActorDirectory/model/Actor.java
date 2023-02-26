@@ -1,13 +1,7 @@
 package com.api.actordirectory.ActorDirectory.model;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
-
 public class Actor {
     private String name;
     private Integer actorId;
-
     private double height;
     private String DOB;
 
@@ -23,7 +17,6 @@ public class Actor {
 
     public Actor(String name, double height, String DOB) {
         this.name = name;
-
         this.height = height;
         this.DOB = DOB;
     }
