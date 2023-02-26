@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 import java.io.*;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 @Component
@@ -13,7 +12,8 @@ public class CsvActorDaoImple implements CsvActorDao{
     @Value("${actor.directory.filename}")
      String FILENAME;
 
-    /*this method return the Directory file full path .
+    /*
+    This method return the Directory file full path .
      */
      public File getFile() {
 
@@ -29,7 +29,7 @@ public class CsvActorDaoImple implements CsvActorDao{
      }
 
     /*
-    this method gets the all actor details from the directory file
+    This method gets the all actor details from the directory file
     and it is reusing in the below methods as per the requirement .
     */
     @Override
@@ -53,16 +53,18 @@ public class CsvActorDaoImple implements CsvActorDao{
         return actors;
 
     }
-    /*this method gets the all actor details using findAll() method and then filter the data by given actorId
+    /*This method gets the all actor details using findAll() method and then filter the data by given actorId
           Here we used the Optional class to avoid the null pointer exception
       */
     @Override
     public Optional<Actor>  findById(Integer actorId) throws  Exception{
         return this.findAll().stream().filter(actor->actor.getActorId().equals(actorId)).findFirst();
     }
-    /*This method gets the all actor details using findAll() method and then filter the data by given name
+
+    /*
+    This method gets the all actor details using findAll() method and then filter the data by given name
              in the filter condition ,1st converting name to lower case to ignore the case sensitive then checking the given name is present in list or not .
-              */
+    */
     @Override
     public List<Actor> findByName(String name) throws Exception{
         return this.findAll().stream().filter(actor->actor.getName().toLowerCase().contains(name.toLowerCase())).collect(Collectors.toList());
@@ -79,7 +81,6 @@ public class CsvActorDaoImple implements CsvActorDao{
         writer.close();
         return "Actor saved successfully";
     }
-
 
     /*
     This method update the given actor details into ActorDirectory file
@@ -113,7 +114,8 @@ public class CsvActorDaoImple implements CsvActorDao{
         writer.close();
     }
 
-    /*This method returns the Actor Id for new actors .
+    /*
+    This method returns the Actor Id for new actors .
      */
     private int getNextId() throws Exception {
         List<Actor> actors = findAll();
